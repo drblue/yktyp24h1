@@ -16,11 +16,20 @@ type Todo = {
 	completed: boolean;
 }
 
-const todos: Todo[] = [
-	{ title: "🤓 Learn about TypeScript", completed: true },
-	{ title: "😇 Take over the world", completed: false },
-	{ title: "💰 Profit", completed: false },
-];
+// Get JSON of Todos from LocalStorage
+const json = localStorage.getItem("todos") || "[]";
+//     ^?
+
+const todos: Todo[] = JSON.parse(json);
+
+// Save todos to LocalStorage
+const saveTodos = () => {
+	// Convert todos-array to JSON
+	const json = JSON.stringify(todos);
+
+	// Save JSON to localStorage
+	localStorage.setItem("todos", json);
+}
 
 /**
  * Render todos to DOM
@@ -59,6 +68,9 @@ newTodoFormEl.addEventListener("submit", (e) => {
 
 	// Clear input field
 	newTodoTitleEl.value = "";
+
+	// Save todos 🛟
+	saveTodos();
 
 	// Re-render todos
 	renderTodos();
