@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" href="https://fav.farm/📝" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>03-todos</title>
+</head>
+
+<body>
+	<div id="app" class="container py-3">
+		<h1>Todos</h1>
+
+		<ul id="todos" class="todos list-group mb-5">
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+				<span class="todo-item">
+					<input type="checkbox" class="me-2" checked />
+					<span class="todo-title">🤓 Learn about TypeScript</span>
+				</span>
+				<span class="todo-actions">
+					<button class="btn btn-warning">Edit</button>
+					<button class="btn btn-danger">Delete</button>
+				</span>
+			</li>
+
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+				<span class="todo-item">
+					<input type="checkbox" class="me-2" />
+					<span class="todo-title">😇 Take over the world</span>
+				</span>
+				<span class="todo-actions">
+					<button class="btn btn-warning">Edit</button>
+					<button class="btn btn-danger">Delete</button>
+				</span>
+			</li>
+
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+				<span class="todo-item">
+					<input type="checkbox" class="me-2" />
+					<span class="todo-title">💰 Profit</span>
+				</span>
+				<span class="todo-actions">
+					<button class="btn btn-warning">Edit</button>
+					<button class="btn btn-danger">Delete</button>
+				</span>
+			</li>
+		</ul>
+
+		<h2 class="mb-3">Create a new Todo</h2>
+		<form id="new-todo-form">
+			<div class="form-group mb-2">
+				<input
+					type="text"
+					id="new-todo-title"
+					name="title"
+					class="form-control"
+					placeholder="Enter a description of your new todo..."
+				/>
+			</div>
+
+			<button type="submit" class="btn btn-success">Create</button>
+			<button type="reset" class="btn btn-warning">Reset</button>
+		</form>
+	</div>
+
+	<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
