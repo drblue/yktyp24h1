@@ -6,14 +6,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "json-server --watch data/db.json --port 3000 --delay 0"
   },
   "devDependencies": {
-    "typescript": "^5.5.3",
-    "vite": "^5.4.1"
+    "bootstrap": "^5.3.3",
+    "json-server": "^0.17.4",
+    "sass": "1.77.5",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.6"
   },
   "dependencies": {
-    "bootstrap": "^5.3.3",
-    "sass": "^1.77.5"
+    "axios": "^1.7.7"
   }
 }
