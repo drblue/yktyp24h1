@@ -39,7 +39,7 @@ kan också se ändringarna i commit
 Gör en kopia av din egen `03-todos`:
 
 ```bash
-cp -r 03-todos 04-async-todos
+cp -R 03-todos 04-async-todos
 cd 04-async-todos
 npm install json-server@^0.17.4 --save-dev
 npm install axios
