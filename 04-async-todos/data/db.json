@@ -14,6 +14,11 @@
       "id": 3,
       "title": "Have fun making promises",
       "completed": false
+    },
+    {
+      "title": "My forth todo",
+      "completed": true,
+      "id": 4
     }
   ]
 }

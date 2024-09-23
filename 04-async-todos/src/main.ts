@@ -1,3 +1,5 @@
+import { getTodos } from "./api";
+import type { Todo } from "./api.types";
 import "./assets/scss/app.scss";
 
 /**
@@ -8,19 +10,17 @@ const todosEl = document.querySelector<HTMLUListElement>("#todos")!;
 const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form")!;
 //     ^?
 
-/**
- * Initial state
- */
-type Todo = {
-	title: string;
-	completed: boolean;
+// Local variable containing all the todos from the server
+let todos: Todo[] = [];
+
+// Get todos from API and render them
+const getTodosAndRender = async () => {
+	// Get todos from server and update local copy
+	todos = await getTodos();
+
+	// Render dem todos
+	renderTodos();
 }
-
-// Get JSON of Todos from LocalStorage
-const json = localStorage.getItem("todos") || "[]";
-//     ^?
-
-const todos: Todo[] = JSON.parse(json);
 
 // Save todos to LocalStorage
 const saveTodos = () => {
@@ -78,5 +78,5 @@ newTodoFormEl.addEventListener("submit", (e) => {
 	console.log("GREAT SUCCESS!", todos);
 });
 
-// Render initial list of todos
-renderTodos();
+// Get the todos from the API and *then* render initial list of todos
+getTodosAndRender();
