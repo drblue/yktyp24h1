@@ -212,3 +212,51 @@ const makeHttpRequest = (method: HttpVerbs, endpoint: string) => {
 makeHttpRequest("GET", "http://localhost:3000/todos");
 // makeHttpRequest("PSOT", "http://localhost:3000/todos/1337");
 makeHttpRequest("PATCH", "lolcats.gif");
+
+/**
+ * Tuples 🌷
+ */
+
+// type DivisionResult = number[];  // 😤
+type DivisionResult = [number, number];  // 🤩
+
+
+/**
+ * Divide two number with each other.
+ *
+ * Returns the integer and the remainder.
+ *
+ * @example divide(10, 3)  =>  [3, 1]
+ * @example divide(11, 4)  =>  [2, 3]
+ * @example divide(12, 3)  =>  [4, 0]
+ *
+ */
+
+const divide = (a: number, b: number): DivisionResult => {
+	const integer = Math.floor(a / b);  // 10 / 3 = 3
+	const remainder = a % b;  // 10 % 3 = 1
+
+	return [integer, remainder];
+}
+
+// const [tenByThreeInt, tenByThreeMod, tenByThreeMaybe] = divide(10, 3);
+
+const divideWithoutTupleThatStillIsSomewhatATuple = (a: number, b: number) => {
+	const integer = Math.floor(a / b);  // 10 / 3 = 3
+	const remainder = a % b;  // 10 % 3 = 1
+
+	return [integer, remainder] as const;
+}
+
+type TupleDemo = [string, number];
+
+const tuplesRfun = () => {
+	let str = "LOL";
+	let num = 1337;
+
+	return [str, num] as const;
+}
+const res = tuplesRfun();  // const res: readonly [string, number]
+const msg = res[0];  // const msg: string
+const num = res[1];  // const num: number
+// const lol = res[2];  // Tuple type 'readonly [string, number]' of length '2' has no element at index '2'.ts(2493)
