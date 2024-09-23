@@ -34,3 +34,13 @@ export const getTodos = async () => {
 	const response = await axios.get<Todo[]>(baseUrl + "/todos");
 	return response.data;
 }
+
+/**
+ * Create a new todo in the API
+ *
+ * @param todo
+ */
+export const createTodo = async (todo) => {
+	// Send a POST-request to http://localhost:3000/todos with the contents of `todo` as body
+
+}

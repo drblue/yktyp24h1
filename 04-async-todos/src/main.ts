@@ -37,7 +37,7 @@ const saveTodos = () => {
 const renderTodos = () => {
 	todosEl.innerHTML = todos
 		.map(todo =>
-			`<li class="list-group-item d-flex justify-content-between align-items-center">
+			`<li class="list-group-item d-flex justify-content-between align-items-center" data-todo-id="${todo.id}">
 				<span class="todo-item">
 					<input type="checkbox" class="me-2" ${todo.completed ? "checked" : ""} />
 					<span class="todo-title">${todo.title}</span>
@@ -60,20 +60,27 @@ newTodoFormEl.addEventListener("submit", (e) => {
 	const newTodoTitleEl = document.querySelector<HTMLInputElement>("#new-todo-title")!;
 //      ^?
 
+	// Create the todo in the API (and wait for the request to be completed)
+
+	/*
 	// PUSH! 🫸🏻
 	todos.push({
 		title: newTodoTitleEl.value,
 		completed: false
 	});
 
-	// Clear input field
-	newTodoTitleEl.value = "";
-
 	// Save todos 🛟
 	saveTodos();
 
 	// Re-render todos
 	renderTodos();
+	*/
+
+	// Get todos from API (which will include the newly created todo) and re-render the list
+	getTodosAndRender();
+
+	// Clear input field
+	newTodoTitleEl.value = "";
 
 	console.log("GREAT SUCCESS!", todos);
 });
