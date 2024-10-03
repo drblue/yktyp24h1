@@ -1,4 +1,4 @@
-import { getTodos } from "./api";
+import { getTodos, createTodo } from "./api";
 import type { Todo } from "./api.types";
 import "./assets/scss/app.scss";
 
@@ -20,15 +20,6 @@ const getTodosAndRender = async () => {
 
 	// Render dem todos
 	renderTodos();
-}
-
-// Save todos to LocalStorage
-const saveTodos = () => {
-	// Convert todos-array to JSON
-	const json = JSON.stringify(todos);
-
-	// Save JSON to localStorage
-	localStorage.setItem("todos", json);
 }
 
 /**
@@ -54,27 +45,17 @@ const renderTodos = () => {
 /**
  * Listen for new todo form being submitted
  */
-newTodoFormEl.addEventListener("submit", (e) => {
+newTodoFormEl.addEventListener("submit", async (e) => {
 	e.preventDefault();
 
 	const newTodoTitleEl = document.querySelector<HTMLInputElement>("#new-todo-title")!;
 //      ^?
 
 	// Create the todo in the API (and wait for the request to be completed)
-
-	/*
-	// PUSH! 🫸🏻
-	todos.push({
+	await createTodo({
 		title: newTodoTitleEl.value,
-		completed: false
+		completed: false,
 	});
-
-	// Save todos 🛟
-	saveTodos();
-
-	// Re-render todos
-	renderTodos();
-	*/
 
 	// Get todos from API (which will include the newly created todo) and re-render the list
 	getTodosAndRender();

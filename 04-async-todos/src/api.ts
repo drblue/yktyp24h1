@@ -2,9 +2,9 @@
  * All communication with the backend REST API `json-server’
  */
 import axios from "axios";
-import type { Todo } from "./api.types";
+import type { CreateTodoPayload, Todo } from "./api.types";
 
-const baseUrl = import.meta.env.VITE_API_BASEURL as string;
+const baseUrl = import.meta.env.VITE_API_BASEURL as string || "http://localhost:3000";
 
 /**
  * Get todos from API using fetch
@@ -40,7 +40,8 @@ export const getTodos = async () => {
  *
  * @param todo
  */
-export const createTodo = async (todo) => {
+export const createTodo = async (todo: CreateTodoPayload) => {
 	// Send a POST-request to http://localhost:3000/todos with the contents of `todo` as body
-
+	const response = await axios.post<Todo>(baseUrl + "/todos", todo);
+	return response.data;
 }
