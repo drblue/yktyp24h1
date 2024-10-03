@@ -2,7 +2,7 @@
  * All communication with the backend REST API `json-server’
  */
 import axios from "axios";
-import type { CreateTodoPayload, Todo } from "./api.types";
+import type { CreateTodoPayload, Todo, UpdateTodoPayload } from "./api.types";
 
 const baseUrl = import.meta.env.VITE_API_BASEURL as string || "http://localhost:3000";
 
@@ -37,11 +37,18 @@ export const getTodos = async () => {
 
 /**
  * Create a new todo in the API
- *
- * @param todo
  */
-export const createTodo = async (todo: CreateTodoPayload) => {
+export const createTodo = async (data: CreateTodoPayload) => {
 	// Send a POST-request to http://localhost:3000/todos with the contents of `todo` as body
-	const response = await axios.post<Todo>(baseUrl + "/todos", todo);
+	const response = await axios.post<Todo>(baseUrl + "/todos", data);
+	return response.data;
+}
+
+/**
+ * Update a todo in the API
+ */
+export const updateTodo = async (id: number, data: UpdateTodoPayload) => {
+	// Send a PATCH-request to http://localhost:3000/todos/:id with the contents of `data` as body
+	const response = await axios.patch<Todo>(baseUrl + "/todos/" + id, data);
 	return response.data;
 }

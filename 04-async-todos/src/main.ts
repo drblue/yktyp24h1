@@ -1,4 +1,4 @@
-import { getTodos, createTodo } from "./api";
+import { getTodos, createTodo, updateTodo } from "./api";
 import type { Todo } from "./api.types";
 import "./assets/scss/app.scss";
 
@@ -43,13 +43,43 @@ const renderTodos = () => {
 }
 
 /**
+ * Listne for clicks in the todo list
+ */
+todosEl.addEventListener("click", async (e) => {
+	// Get event target and type it as HTMLElement
+	const target = e.target as HTMLElement;
+
+	// Check if we should toggle the todo
+	if (target.tagName === "INPUT") {
+		// Someone clicked on a checkbox
+
+		// Find the todo id
+		// const todoId = target.parentElement?.parentElement?.dataset.todoId;
+		const clickedTodoId = Number(target.closest("li")?.dataset.todoId);
+
+		// Find the todo with the correct ID
+		const todo = todos.find(todo => todo.id === clickedTodoId);
+		if (!todo) {
+			return;
+		}
+
+		// Update todo
+		await updateTodo(clickedTodoId, {
+			completed: !todo.completed,
+		});
+
+		// Get todos from API (which will include the newly created todo) and re-render the list
+		getTodosAndRender();
+	}
+});
+
+/**
  * Listen for new todo form being submitted
  */
 newTodoFormEl.addEventListener("submit", async (e) => {
 	e.preventDefault();
 
 	const newTodoTitleEl = document.querySelector<HTMLInputElement>("#new-todo-title")!;
-//      ^?
 
 	// Create the todo in the API (and wait for the request to be completed)
 	await createTodo({
@@ -62,8 +92,6 @@ newTodoFormEl.addEventListener("submit", async (e) => {
 
 	// Clear input field
 	newTodoTitleEl.value = "";
-
-	console.log("GREAT SUCCESS!", todos);
 });
 
 // Get the todos from the API and *then* render initial list of todos
