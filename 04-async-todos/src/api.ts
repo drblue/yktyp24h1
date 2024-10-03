@@ -52,3 +52,12 @@ export const updateTodo = async (id: number, data: UpdateTodoPayload) => {
 	const response = await axios.patch<Todo>(baseUrl + "/todos/" + id, data);
 	return response.data;
 }
+
+/**
+ * Delete a todo in the API
+ */
+export const deleteTodo = async (id: number) => {
+	// Send a DELETE-request to http://localhost:3000/todos/:id
+	await axios.delete(baseUrl + "/todos/" + id);
+	return true;
+}

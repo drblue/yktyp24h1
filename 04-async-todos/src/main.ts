@@ -1,4 +1,4 @@
-import { getTodos, createTodo, updateTodo } from "./api";
+import { getTodos, createTodo, updateTodo, deleteTodo } from "./api";
 import type { Todo } from "./api.types";
 import "./assets/scss/app.scss";
 
@@ -34,8 +34,8 @@ const renderTodos = () => {
 					<span class="todo-title">${todo.title}</span>
 				</span>
 				<span class="todo-actions">
-					<button class="btn btn-warning">Edit</button>
-					<button class="btn btn-danger">Delete</button>
+					<button class="btn btn-secondary" data-action="edit">Edit</button>
+					<button class="btn btn-danger" data-action="delete">Delete</button>
 				</span>
 			</li>`
 		)
@@ -49,9 +49,8 @@ todosEl.addEventListener("click", async (e) => {
 	// Get event target and type it as HTMLElement
 	const target = e.target as HTMLElement;
 
-	// Check if we should toggle the todo
 	if (target.tagName === "INPUT") {
-		// Someone clicked on a checkbox
+		// Toggle todo
 
 		// Find the todo id
 		// const todoId = target.parentElement?.parentElement?.dataset.todoId;
@@ -70,6 +69,20 @@ todosEl.addEventListener("click", async (e) => {
 
 		// Get todos from API (which will include the newly created todo) and re-render the list
 		getTodosAndRender();
+
+	} else if (target.dataset.action === "delete") {
+		// Delete all ze things!!111 💣
+		console.log("Someone wants to watch the world burn:", e.target);
+
+		// Find the todo id
+		const clickedTodoId = Number(target.closest("li")?.dataset.todoId);
+
+		// Delete todo
+		await deleteTodo(clickedTodoId);
+
+		// Get todos from API (which will include the newly created todo) and re-render the list
+		getTodosAndRender();
+
 	}
 });
 
