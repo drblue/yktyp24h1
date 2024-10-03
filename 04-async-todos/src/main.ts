@@ -83,6 +83,31 @@ todosEl.addEventListener("click", async (e) => {
 		// Get todos from API (which will include the newly created todo) and re-render the list
 		getTodosAndRender();
 
+	} else if (target.dataset.action === "edit") {
+		// Edit todo
+
+		// Find the todo id
+		const clickedTodoId = Number(target.closest("li")?.dataset.todoId);
+
+		// Find the todo with the correct ID
+		const todo = todos.find(todo => todo.id === clickedTodoId);
+		if (!todo) {
+			return;
+		}
+
+		// Ask user about new title
+		const title = prompt("What's the new title?", todo.title);
+		if (!title) {
+			return;
+		}
+
+		// Update todo
+		await updateTodo(clickedTodoId, {
+			title,
+		});
+
+		// Get todos from API (which will include the newly created todo) and re-render the list
+		getTodosAndRender();
 	}
 });
 
