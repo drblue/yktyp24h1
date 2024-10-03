@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { getTodos, createTodo, updateTodo, deleteTodo } from "./api";
 import type { Todo } from "./api.types";
 import "./assets/scss/app.scss";
@@ -13,13 +14,31 @@ const newTodoFormEl = document.querySelector<HTMLFormElement>("#new-todo-form")!
 // Local variable containing all the todos from the server
 let todos: Todo[] = [];
 
+// Error Handler
+const handleError = (err: unknown) => {
+	if (err instanceof AxiosError) {
+		alert("Network error, response code was: " + err.message);
+
+	} else if (err instanceof Error) {
+		alert("Something went wrong: " + err.message);
+
+	} else {
+		alert("Someone caused an error that should never have happend 😱");
+	}
+}
+
 // Get todos from API and render them
 const getTodosAndRender = async () => {
-	// Get todos from server and update local copy
-	todos = await getTodos();
+	try {
+		// Get todos from server and update local copy
+		todos = await getTodos();
 
-	// Render dem todos
-	renderTodos();
+		// Render dem todos
+		renderTodos();
+
+	} catch (err) {
+		handleError(err);
+	}
 }
 
 /**
@@ -62,13 +81,18 @@ todosEl.addEventListener("click", async (e) => {
 			return;
 		}
 
-		// Update todo
-		await updateTodo(clickedTodoId, {
-			completed: !todo.completed,
-		});
+		try {
+			// Update todo
+			await updateTodo(clickedTodoId, {
+				completed: !todo.completed,
+			});
 
-		// Get todos from API (which will include the newly created todo) and re-render the list
-		getTodosAndRender();
+			// Get todos from API (which will include the newly created todo) and re-render the list
+			getTodosAndRender();
+
+		} catch (err) {
+			handleError(err);
+		}
 
 	} else if (target.dataset.action === "delete") {
 		// Delete all ze things!!111 💣
@@ -77,11 +101,16 @@ todosEl.addEventListener("click", async (e) => {
 		// Find the todo id
 		const clickedTodoId = Number(target.closest("li")?.dataset.todoId);
 
-		// Delete todo
-		await deleteTodo(clickedTodoId);
+		try {
+			// Delete todo
+			await deleteTodo(clickedTodoId);
 
-		// Get todos from API (which will include the newly created todo) and re-render the list
-		getTodosAndRender();
+			// Get todos from API (which will include the newly created todo) and re-render the list
+			getTodosAndRender();
+
+		} catch (err) {
+			handleError(err);
+		}
 
 	} else if (target.dataset.action === "edit") {
 		// Edit todo
@@ -101,13 +130,18 @@ todosEl.addEventListener("click", async (e) => {
 			return;
 		}
 
-		// Update todo
-		await updateTodo(clickedTodoId, {
-			title,
-		});
+		try {
+			// Update todo
+			await updateTodo(clickedTodoId, {
+				title,
+			});
 
-		// Get todos from API (which will include the newly created todo) and re-render the list
-		getTodosAndRender();
+			// Get todos from API (which will include the newly created todo) and re-render the list
+			getTodosAndRender();
+
+		} catch (err) {
+			handleError(err);
+		}
 	}
 });
 
@@ -119,14 +153,19 @@ newTodoFormEl.addEventListener("submit", async (e) => {
 
 	const newTodoTitleEl = document.querySelector<HTMLInputElement>("#new-todo-title")!;
 
-	// Create the todo in the API (and wait for the request to be completed)
-	await createTodo({
-		title: newTodoTitleEl.value,
-		completed: false,
-	});
+	try {
+		// Create the todo in the API (and wait for the request to be completed)
+		await createTodo({
+			title: newTodoTitleEl.value,
+			completed: false,
+		});
 
-	// Get todos from API (which will include the newly created todo) and re-render the list
-	getTodosAndRender();
+		// Get todos from API (which will include the newly created todo) and re-render the list
+		getTodosAndRender();
+
+	} catch (err) {
+		handleError(err);
+	}
 
 	// Clear input field
 	newTodoTitleEl.value = "";

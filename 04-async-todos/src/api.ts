@@ -32,6 +32,7 @@ export const getTodosFetch = async () => {
  */
 export const getTodos = async () => {
 	const response = await axios.get<Todo[]>(baseUrl + "/todos");
+
 	return response.data;
 }
 
