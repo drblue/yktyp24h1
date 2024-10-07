@@ -38,12 +38,28 @@ export const getTodosFetch = async () => {
 }
 
 /**
+ * Make a generic HTTP GET Request
+ *
+ * @param endpoint Endpoint to get
+ * @returns
+ */
+const get = async <T = any>(endpoint: string) => {
+	const response = await instance.get<T>(endpoint);
+	return response.data;
+}
+
+/**
  * Get todos from API using axios
  */
 export const getTodos = async () => {
-	const response = await instance.get<Todo[]>("/todos");
+	return get<Todo[]>("/todos");
+}
 
-	return response.data;
+/**
+ * Get todo from API using axios
+ */
+export const getTodo = async (id: number) => {
+	return get("/todos/" + id);
 }
 
 /**
