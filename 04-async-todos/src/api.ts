@@ -49,6 +49,17 @@ const get = async <T = any>(endpoint: string) => {
 }
 
 /**
+ * Make a generic HTTP POST Request
+ *
+ * @param endpoint Endpoint to get
+ * @returns
+ */
+const post = async <Response, Payload>(endpoint: string, data: Payload) => {
+	const response = await instance.post<Response>(endpoint, data);
+	return response.data;
+}
+
+/**
  * Get todos from API using axios
  */
 export const getTodos = async () => {
@@ -66,9 +77,7 @@ export const getTodo = async (id: number) => {
  * Create a new todo in the API
  */
 export const createTodo = async (data: CreateTodoPayload) => {
-	// Send a POST-request to http://localhost:3000/todos with the contents of `todo` as body
-	const response = await instance.post<Todo>("/todos", data);
-	return response.data;
+	return post<Todo, CreateTodoPayload>("/todos", data);
 }
 
 /**
