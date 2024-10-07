@@ -3,7 +3,7 @@ export type Todo = {
 	title: string;
 	completed: boolean;
 	deadline?: number;
-	[key: string]: any;  // index signature
+	// [key: string]: any;  // index signature
 }
 
 // 🥴
@@ -14,6 +14,7 @@ export type Todo = {
 
 // 😎
 export type CreateTodoPayload = Omit<Todo, "id">;  // Example: Omit<Todo, "id" | "title">
+export type TodoIdTitle = Pick<Todo, "id" | "title">;
 
 // 🥴
 // export type UpdateTodoPayload = {
@@ -24,7 +25,9 @@ export type CreateTodoPayload = Omit<Todo, "id">;  // Example: Omit<Todo, "id" |
 
 // 😎
 export type UpdateTodoPayload = Partial<Todo>;
+export type RequiredTodoPayload = Required<Todo>;
 
+/*
 const fakedTodo: Todo = {
 	id: 1337,
 	title: "My fake todo",
@@ -38,3 +41,4 @@ const secondFakedTodo: Todo = {
 	completed: false,
 	client_id: 42,
 }
+*/
