@@ -4,6 +4,7 @@ import PacmanLoader from 'react-spinners/PacmanLoader'
 import TodoListItem from '../components/TodoListItem'
 import TodoAPI from '../services/TodoAPI'
 import { Todo } from '../services/TodoAPI.types'
+import SuccessMessage from '../components/SuccessMessage'
 
 const TodosPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +25,16 @@ const TodosPage = () => {
 			<h1 className="mb-3">Todos</h1>
 
 			<p>Here be form</p>
+
+			<SuccessMessage heading="Such success">
+				<p>Very good</p>
+				<p>Much progress</p>
+			</SuccessMessage>
+
+			{/* <Alert variant="success">
+				<Alert.Heading>Look at my heading!</Alert.Heading>
+				<p>Look at all my text!</p>
+			</Alert> */}
 
 			{isLoading && <PacmanLoader size={30} color="#f00" speedMultiplier={1.25} />}
 
