@@ -5,6 +5,7 @@ import axios from "axios";
 import type { CreateTodoPayload, Todo, UpdateTodoPayload } from "./TodoAPI.types";
 
 const baseURL = import.meta.env.VITE_API_BASEURL as string || "http://localhost:3000";
+const FAKE_DELAY = 1500;
 
 // Create a new axios instance
 const instance = axios.create({
@@ -17,27 +18,6 @@ const instance = axios.create({
 });
 
 /**
- * Get todos from API using fetch
- */
-export const getTodosFetch = async () => {
-	const response = await fetch(baseURL + "/todos");    // http://localhost:3000/todos
-//         ^?
-
-	if (!response.ok) {
-		throw new Error("Response was not OK!");
-	}
-
-	const data: Todo[] = await response.json();
-//        ^?
-
-	// if (!data.length) {
-	// 	throw new Error("No todos!");
-	// }
-
-	return data;
-}
-
-/**
  * Make a generic HTTP GET Request
  *
  * @param endpoint Endpoint to get
@@ -45,6 +25,12 @@ export const getTodosFetch = async () => {
  */
 const get = async <T>(endpoint: string) => {
 	const response = await instance.get<T>(endpoint);
+
+	// Fake slow API
+	if (FAKE_DELAY) {
+		await new Promise(r => setTimeout(r, FAKE_DELAY));
+	}
+
 	return response.data;
 }
 
