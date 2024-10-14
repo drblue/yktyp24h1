@@ -97,3 +97,11 @@ export const deleteTodo = async (id: number) => {
 	await instance.delete("/todos/" + id);
 	return true;
 }
+
+export default {
+	createTodo,
+	deleteTodo,
+	getTodo,
+	getTodos,
+	updateTodo,
+}
