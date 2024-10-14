@@ -10,13 +10,24 @@ const TodosPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [todos, setTodos] = useState<Todo[] | null>(null);
 
+	const getTodos = async () => {
+		// reset initial state
+		setIsLoading(true);
+
+		const data = await TodoAPI.getTodos();
+		setIsLoading(false);
+		setTodos(data);
+	}
+
+	const toggleTodo = async (todo: Todo) => {
+		await TodoAPI.updateTodo(todo.id, { completed: !todo.completed });
+
+		// Re-fetch all todos
+		getTodos();
+	}
+
 	// Fetch todos when component is being mounted
 	useEffect(() => {
-		const getTodos = async () => {
-			const data = await TodoAPI.getTodos();
-			setIsLoading(false);
-			setTodos(data);
-		}
 		getTodos();
 	}, []);
 
@@ -24,17 +35,13 @@ const TodosPage = () => {
 		<>
 			<h1 className="mb-3">Todos</h1>
 
-			<p>Here be form</p>
+			{/* Form should validate that a title is entered and at least 2 chars long, ONLY then should the parent's function for creating the todo be called */}
+			{/* <AddTodoForm onAddTodo={createTodo} /> */}
 
 			<SuccessMessage heading="Such success">
 				<p>Very good</p>
 				<p>Much progress</p>
 			</SuccessMessage>
-
-			{/* <Alert variant="success">
-				<Alert.Heading>Look at my heading!</Alert.Heading>
-				<p>Look at all my text!</p>
-			</Alert> */}
 
 			{isLoading && <PacmanLoader size={30} color="#f00" speedMultiplier={1.25} />}
 
@@ -42,6 +49,7 @@ const TodosPage = () => {
 				{todos.map(todo => (
 					<TodoListItem
 						key={todo.id}
+						onToggle={toggleTodo}
 						todo={todo}
 					/>
 				))}

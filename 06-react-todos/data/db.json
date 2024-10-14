@@ -2,7 +2,7 @@
   "todos": [
     {
       "title": "Learn TypeScript in React",
-      "completed": false,
+      "completed": true,
       "id": 1
     },
     {
