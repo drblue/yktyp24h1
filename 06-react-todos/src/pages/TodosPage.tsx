@@ -3,11 +3,19 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import PacmanLoader from 'react-spinners/PacmanLoader'
 import TodoListItem from '../components/TodoListItem'
 import TodoAPI from '../services/TodoAPI'
-import { Todo } from '../services/TodoAPI.types'
+import { CreateTodoPayload, Todo } from '../services/TodoAPI.types'
+import AddTodoForm from '../components/AddTodoForm'
 
 const TodosPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [todos, setTodos] = useState<Todo[] | null>(null);
+
+	const createTodo = async (data: CreateTodoPayload) => {
+		await TodoAPI.createTodo(data);
+
+		// Re-fetch all todos
+		getTodos();
+	}
 
 	const deleteTodo = async (todo: Todo) => {
 		await TodoAPI.deleteTodo(todo.id);
@@ -49,7 +57,7 @@ const TodosPage = () => {
 			<h1 className="mb-3">Todos</h1>
 
 			{/* Form should validate that a title is entered and at least 2 chars long, ONLY then should the parent's function for creating the todo be called */}
-			{/* <AddTodoForm onAddTodo={createTodo} /> */}
+			<AddTodoForm onAddTodo={createTodo} />
 
 			{/* <SuccessMessage heading="Such success">
 				<p>Very good</p>
