@@ -14,11 +14,6 @@
       "title": "Learn stuff",
       "completed": true,
       "id": 3
-    },
-    {
-      "title": "Do all the todos",
-      "completed": false,
-      "id": 4
     }
   ]
 }

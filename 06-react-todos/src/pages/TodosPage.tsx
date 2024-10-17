@@ -4,11 +4,24 @@ import PacmanLoader from 'react-spinners/PacmanLoader'
 import TodoListItem from '../components/TodoListItem'
 import TodoAPI from '../services/TodoAPI'
 import { Todo } from '../services/TodoAPI.types'
-import SuccessMessage from '../components/SuccessMessage'
 
 const TodosPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [todos, setTodos] = useState<Todo[] | null>(null);
+
+	const deleteTodo = async (todo: Todo) => {
+		await TodoAPI.deleteTodo(todo.id);
+
+		// Re-fetch all todos
+		getTodos();
+	}
+
+	const editTodo = async (todo: Todo, newTitle: string) => {
+		await TodoAPI.updateTodo(todo.id, { title: newTitle });
+
+		// Re-fetch all todos
+		getTodos();
+	}
 
 	const getTodos = async () => {
 		// reset initial state
@@ -38,10 +51,10 @@ const TodosPage = () => {
 			{/* Form should validate that a title is entered and at least 2 chars long, ONLY then should the parent's function for creating the todo be called */}
 			{/* <AddTodoForm onAddTodo={createTodo} /> */}
 
-			<SuccessMessage heading="Such success">
+			{/* <SuccessMessage heading="Such success">
 				<p>Very good</p>
 				<p>Much progress</p>
-			</SuccessMessage>
+			</SuccessMessage> */}
 
 			{isLoading && <PacmanLoader size={30} color="#f00" speedMultiplier={1.25} />}
 
@@ -49,6 +62,8 @@ const TodosPage = () => {
 				{todos.map(todo => (
 					<TodoListItem
 						key={todo.id}
+						onDelete={deleteTodo}
+						onEdit={editTodo}
 						onToggle={toggleTodo}
 						todo={todo}
 					/>
