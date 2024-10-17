@@ -7,7 +7,7 @@ import AddTodoForm from '../components/AddTodoForm'
 import { useQuery } from '@tanstack/react-query'
 
 const TodosPage = () => {
-	const { data: todos, isLoading } = useQuery({
+	const { data: todos, isLoading, refetch } = useQuery({
 		queryKey: ["todos"],
 		queryFn: TodoAPI.getTodos,
 	});
@@ -16,28 +16,28 @@ const TodosPage = () => {
 		await TodoAPI.createTodo(data);
 
 		// Re-fetch all todos
-		// getTodos();
+		refetch();
 	}
 
 	const deleteTodo = async (todo: Todo) => {
 		await TodoAPI.deleteTodo(todo.id);
 
 		// Re-fetch all todos
-		// getTodos();
+		refetch();
 	}
 
 	const editTodo = async (todo: Todo, newTitle: string) => {
 		await TodoAPI.updateTodo(todo.id, { title: newTitle });
 
 		// Re-fetch all todos
-		// getTodos();
+		refetch();
 	}
 
 	const toggleTodo = async (todo: Todo) => {
 		await TodoAPI.updateTodo(todo.id, { completed: !todo.completed });
 
 		// Re-fetch all todos
-		// getTodos();
+		refetch();
 	}
 
 	return (
