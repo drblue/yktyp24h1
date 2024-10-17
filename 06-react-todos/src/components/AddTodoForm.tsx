@@ -50,6 +50,7 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({ onAddTodo }) => {
 				/>
 
 				<Button
+					disabled={newTodoTitle.length < 2}
 					type="submit"
 					variant="success"
 				>
